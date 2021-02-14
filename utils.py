@@ -32,8 +32,8 @@ def delete_checkpoint(name):
     os.remove("./checkpoints/%s_optim_state.pt" % name)'''
     print("INFO: Checkpoint %s removed!" % name)
 
-def load_checkpoint(model, optim, name):
-    check = torch.load("./checkpoints/%s.tar" % name)
+def load_checkpoint(model, optim, name, gpu=True):
+    check = torch.load("./checkpoints/%s.tar" % name) if gpu else torch.load("./checkpoints/%s.tar" % name, map_location='cpu')
     model.load_state_dict(check['model_state_dict'])
     optim.load_state_dict(check['optimizer_state_dict'])
     print("INFO: Checkpoint %s loaded!" % name)
